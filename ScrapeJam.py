@@ -79,13 +79,16 @@ class ScrapeJam: # Here's your chance, do your dance, at the ScrapeJam
 		self.win.move(y,x)
 		self.refresh(False)
 		
-	# @param artists		List of tuples (artist_name, artist_url)
-	# @param album_fn		Func(artist_tuple): returns list of tuples (album_name, album_url)
-	# @param song_fn		Func(artist_tuple, album_tuple): returns list of tuples (song_name, song_url)
-	# @param lyric_fn		Func(artist_tuple, album_tuple, song_tuple): returns lyrics or None
 	# TODO: fill in UUIDs
 	def scrape(self, artists, album_fn, song_fn, lyric_fn, errorlog=None):
-		
+		"""Fetches rows from a Bigtable.
+
+		Args:
+			artists		List of tuples (artist_name, artist_url)
+			album_fn	Func(artist_tuple): returns list of tuples (album_name, album_url)
+			song_fn		Func(artist_tuple, album_tuple): returns list of tuples (song_name, song_url)
+			lyric_fn	Func(artist_tuple, album_tuple, song_tuple): returns lyrics or None
+		"""
 		def errorwrap(fn):
 			def wrapped(*args, **kwargs):
 				try:
