@@ -12,7 +12,7 @@ DROP TABLE IF EXISTS `lyricjam`.`songs` ;
 
 CREATE  TABLE IF NOT EXISTS `lyricjam`.`songs` (
   `id` INT NOT NULL AUTO_INCREMENT ,
-  `name` VARCHAR(200) NOT NULL ,
+  `name` VARCHAR(255) NOT NULL ,
   `lyrics` TEXT NOT NULL ,
   `uuid` VARCHAR(45) NULL ,
   PRIMARY KEY (`id`) ,
@@ -29,7 +29,8 @@ DROP TABLE IF EXISTS `lyricjam`.`artists` ;
 
 CREATE  TABLE IF NOT EXISTS `lyricjam`.`artists` (
   `id` INT NOT NULL AUTO_INCREMENT ,
-  `name` VARCHAR(200) NOT NULL ,
+  `name` VARCHAR(255) NOT NULL ,
+  `image` VARCHAR(255) ,
   `uuid` VARCHAR(45) NULL ,
   PRIMARY KEY (`id`) ,
   UNIQUE INDEX `musicbrainz_id_UNIQUE` (`uuid` ASC) )
@@ -45,7 +46,8 @@ DROP TABLE IF EXISTS `lyricjam`.`albums` ;
 
 CREATE  TABLE IF NOT EXISTS `lyricjam`.`albums` (
   `id` INT NOT NULL AUTO_INCREMENT ,
-  `name` VARCHAR(200) NOT NULL ,
+  `name` VARCHAR(255) NOT NULL ,
+  `image` VARCHAR(255) ,
   `uuid` VARCHAR(45) NULL ,
   PRIMARY KEY (`id`) ,
   UNIQUE INDEX `musicbrainz_id_UNIQUE` (`uuid` ASC) )
