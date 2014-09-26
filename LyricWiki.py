@@ -1,4 +1,4 @@
-import htmlentitydefs, re, urllib2, json, sys
+import htmlentitydefs, re, urllib2, json, sys, datetime
 from musicbrainz2.utils import extractUuid
 from musicbrainz2.webservice import Query, ArtistFilter, WebServiceError
 from bs4 import BeautifulSoup, Tag, Comment
@@ -75,13 +75,25 @@ def getLyrics(artist_tuple, album_tuple, song_tuple):
 			comment.extract()
 	return unescape(cleanLyricList(lyricsdiv.contents))
 
-WIKI_URL = 'http://lyrics.wikia.com/index.php?title=Category:Artists_A'
+BASE_URL = 'http://lyrics.wikia.com'
+START_PAGE = '/index.php?title=Category:Artists_A'
+WIKI_URL = BASE_URL + START_PAGE
+
 def scrape():
-	soup = BeautifulSoup(getHtml(WIKI_URL))
-	artists_a = soup.select('div#mw-pages')[0]('a')
-	artists = [(artist.string, artist['href']) for artist in artists_a]
-	#for i in range(32): artists.pop(0)
-	sj = ScrapeJam('lyricwiki.json', 'lyricwiki_errs.log')
-	sj.scrape(artists, getAlbums, getSongs, getLyrics)
+	next_song = WIKI_URL
+	d = datetime.datetime.now()
+	timestamp = '{:%Y-%m-%d_%H:%M:%S}'.format(d)
+	filename = 'lyricwiki_' +  timestamp + '.json'
+
+	while next_song:
+		soup = BeautifulSoup(getHtml(next_song))
+		artists_a = soup.select('div#mw-pages')[0]('a')
+		artists = [(artist.string, artist['href']) for artist in artists_a]
+		sj = ScrapeJam(filename, 'lyricwiki_errs.log')
+		sj.scrape(artists, getAlbums, getSongs, getLyrics)
+
+		next_song = BASE_URL + soup.select('div#mw-pages')[0]('a')[0]['href']
+		if not 'pagefrom' in next_song:
+			break
 
 scrape()

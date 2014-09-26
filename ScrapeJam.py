@@ -64,7 +64,7 @@ class ScrapeJam: # Here's your chance, do your dance, at the ScrapeJam
 		
 	def write(self, file, data):
 		f = open(file, 'w')
-		json.dump(data, f)
+		json.dump(data, f, encoding='utf-8')
 		f.close()
 		
 	def refresh(self, clear=True):
