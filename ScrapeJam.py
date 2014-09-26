@@ -38,10 +38,13 @@ def getHtml(url, clearCache=False, user_agent='Mozilla/5.0 (compatible; Googlebo
 	global htmlCache
 	if clearCache: htmlCache = {}
 	if not url in htmlCache:
+		proxy = urllib2.ProxyHandler({'http': '127.0.0.1:9050'})
+		opener = urllib2.build_opener(proxy)
+		urllib2.install_opener(opener)
+
 		req = urllib2.Request(url)
 		req.add_header('User-agent', user_agent)
 		htmlCache[url] = urllib2.urlopen(req).read()
-	#print "CACHE: ", [x for x in htmlCache]
 	return htmlCache[url]
 
 class ScrapeJam: # Here's your chance, do your dance, at the ScrapeJam
