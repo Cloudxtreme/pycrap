@@ -1,18 +1,27 @@
+# Configuration files
 config.py
-*.pyc
-*~
+
+# OS files
 .DS_Store
 Thumbs.db
 ehthumbs.db
-.cache
+*~
+
+# IDE files
 .project
 .settings
+*.pydevproject
 .tmproj
 *.sublime-project
 *.sublime-workspace
 *.komodoproject
 .komodotools
 .idea/
+*.nja
+
+# Temporal files
 tmp/*
 *.json
 *.log
+*.pyc
+.cache
